@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="htp://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+<!-- CSS only -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+	crossorigin="anonymous">
+</head>
+</head>
+<body>
+	<!-- INICIO NAVBAR -->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Spring Boot</a>
+			<button class="navbar-toggler" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNav"
+				aria-controls="navbarNav" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNav">
+				<ul class="navbar-nav">
+					<li class="nav-item"><a class="nav-link active"
+						aria-current="page" href="#">Home</a></li>
+					<li class="nav-item"><a class="nav-link" th:href="@{/listar}">Clientes</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- FIN NAVBAR -->
+
+	<!-- INICIO CONTAINER -->
+	<div class="container ">
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6">
+				<h1 th:text="${titulo}"
+					class="text-secondary border-bottom border-primary "></h1>
+
+				<!-- INICIO ERRORES -->
+				<div th:object="${cliente}" th:remove="tag" class="m-10">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+						<li th:each="err: ${#fields.errors('*')}" th:text="${err}" class="mx-3"></li>
+					</ul>
+				</div>
+				<!-- FIN ERRORES -->
+
+				<!-- INICIO FORMULARIO -->
+				<!-- ACTION: url hacia la ruta -->
+				<!-- th:field=" " hace referencia th:object=" "  -->
+				<form th:action="@{/form}" th:object="${cliente}" method="post">
+					<div class="mb-3 row">
+						<div class="col-12">
+							<label class="form-label">Nombre</label>
+							<div>
+								<input type="text" th:field="*{nombre}" class="form-control" />
+								<small th:if="${#fields.hasErrors('nombre')}"
+									th:errors="*{nombre}" class="form-text text-danger"></small>
+							</div>
+						</div>
+						<div class="col-12">
+							<label class="form-label">Apellido</label>
+							<div>
+								<input type="text" th:field="*{apellido}" class="form-control" />
+								<small th:if="${#fields.hasErrors('apellido')}"
+									th:errors="*{apellido}" class="form-text text-danger"></small>
+
+							</div>
+						</div>
+						<div class="col-12">
+							<label class="form-label">Email</label>
+							<div>
+								<input type="email" th:field="*{email}" class="form-control" />
+								<small th:if="${#fields.hasErrors('email')}"
+									th:errors="*{email}" class="form-text text-danger"></small>
+
+							</div>
+						</div>
+						<div class="col-12">
+							<label class="form-label">Fecha</label>
+							<div>
+								<input type="date" th:field="*{createAt}" class="form-control" />
+								<small th:if="${#fields.hasErrors('createAt')}"
+									th:errors="*{createAt}" class="form-text text-danger"></small>
+
+							</div>
+						</div>
+						<div>
+							<div>
+								<input type="submit" value="Guardar"
+									class="btn btn-primary mt-2" />
+							</div>
+						</div>
+
+						<!-- <input type="hidden" th:field="*{id}" /> -->
+				</form>
+				<!-- INICIO FORMULARIO -->
+			</div>
+		</div>
+		<div class="col-3"></div>
+	</div>
+
+	</div>
+	<!-- INICIO CONTAINER -->
+</body>
+</html>
